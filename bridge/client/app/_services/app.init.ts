@@ -7,11 +7,18 @@ export class AppInitService {
 
   public init() {
     return from(
-      fetch('assets/branding/app-config.json').then(response => {
+      fetch('assets/branding/app-config.json', {
+        headers : {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }).then(response => {
         return response.json();
       }).then(config => {
         if(config)
           window.config = config;
+      }).catch(err => {
+        console.log("Error loading app-config.json " + err);
       })
     ).toPromise();
   }
